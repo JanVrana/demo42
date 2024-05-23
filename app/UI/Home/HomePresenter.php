@@ -10,6 +10,13 @@ use App\Service\MeasurementsApiService;
 class HomePresenter extends \Nette\Application\UI\Presenter
 {
 	/**
+	 * @var \stdClass
+	 * @property string $property
+	 */
+	protected $template;
+
+
+	/**
 	 * constructor
 	 * @param \App\Service\MeasurementsApiService $measurementsApi - a service that loads data from the API is passed via DI
 	 */

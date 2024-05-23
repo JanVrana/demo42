@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Service;
 
-use GuzzleHttp\Client;
 use App\Factory\MeasurementRecordFactory;
+use GuzzleHttp\Client;
 
 
 /**
@@ -12,8 +13,9 @@ class MeasurementsApiService
 {
 	/**
 	 * Constructor setting basic parameters
-	 * @param string $apiUrl - url with API endpoint
-	 * @param string $accessToken - access token
+	 *
+	 * @param string $apiUrl         - url with API endpoint
+	 * @param string $accessToken    - access token
 	 * @param string $collectionName - the name of the collection to load
 	 */
 	public function __construct(private string $apiUrl,
@@ -25,6 +27,7 @@ class MeasurementsApiService
 
 	/**
 	 * Get the last $limit of records from the API, and return them as a MeasurementRecord[] array
+	 *
 	 * @param int $limit - limiting the number of records returned. default = 20
 	 *
 	 * @return \App\Entity\MeasurementRecord[]|null
@@ -54,7 +57,11 @@ class MeasurementsApiService
 			$response = $client->request('GET', '/items/' . $this->collectionName, $params);
 			$body = $response->getBody();
 			$data = json_decode($body, true);
-			return MeasurementRecordFactory::createManyFromArray($data['data']);
+			if (is_array($data) and key_exists('data', $data)) {
+				return MeasurementRecordFactory::createManyFromArray($data['data']);
+			} else{
+				return null;
+			}
 		} catch (\Exception $e) {
 			throw new \Exception ("Failed to load data from api" . $e->getMessage());
 		}
