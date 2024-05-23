@@ -1,0 +1,16 @@
+parameters:
+    apiUrl: 'https://airmonitor.k42.app'
+    accessToken: '37BnlLu_FSDxEscl5oLZ6AAMPl7wjo64'
+    collectionName: 'measurments'
+
+services:
+	- App\Core\RouterFactory::createRouter
+	- App\Service\MeasurementsApiService(%apiUrl%, %accessToken%, %collectionName%)
+	- App\Factory\MeasurementRecordFactory
+
+
+search:
+	-	in: %appDir%
+		classes:
+			- *Factory
+			- *Facade

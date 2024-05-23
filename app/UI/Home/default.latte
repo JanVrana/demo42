@@ -1,0 +1,66 @@
+{block content}
+    <div class="container">
+        <div class="row"><h1>Demo 42</h1></div>
+
+        {if isset($measurementRecords) and count($measurementRecords)}
+            <div class="row">
+                <h2>Most recent</h2>
+                {var $item = $measurementRecords[0]}
+                <table id="firstRecord" class="responsive-table">
+                    <tbody>
+                    <tr>
+                        <td colspan="2"><strong>Temperature:</strong><span class="value">{$item->temperature}</span>
+                        </td>
+                        <td colspan="3"><strong>Humidity:</strong><span class="value">{$item->humidity}</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>CO2:</strong><span class="value">{$item->co2}</span></td>
+                        <td><strong>PM25:</strong><span class="value">{$item->pm25}</span></td>
+                        <td><strong>PM10:</strong><span class="value">{$item->pm10}</span></td>
+                        <td><strong>CH20:</strong><span class="value">{$item->c2ho}</span></td>
+                        <td><strong>TVOC:</strong><span class="value">{$item->tvoc}</span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <h2>Measurements</h2>
+                <table id="records" class="striped responsive-table highlight">
+                    <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Temp.</th>
+                        <th>PM10</th>
+                        <th>PM25</th>
+                        <th>C2HO</th>
+                        <th>CO2</th>
+                        <th>Hum.y</th>
+                        <th>TVOC</th>
+                        <th>HEX</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {foreach $measurementRecords as $item}
+                        {if !$iterator->first}
+                            <tr>
+                                <td>{$item->date_created|date:'H:i:s'}</td>
+                                <td>{$item->temperature}</td>
+                                <td>{$item->pm10}</td>
+                                <td>{$item->pm25}</td>
+                                <td>{$item->c2ho}</td>
+                                <td>{$item->co2}</td>
+                                <td>{$item->humidity}</td>
+                                <td>{$item->tvoc}</td>
+                                <td>{$item->HEX}</td>
+                            </tr>
+                        {/if}
+                    {/foreach}
+                    </tbody>
+                </table>
+            </div>
+        {else}
+            <span >No measurements found</span>
+        {/if}
+    </div>
+{/block}
