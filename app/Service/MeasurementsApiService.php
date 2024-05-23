@@ -11,12 +11,6 @@ use App\Factory\MeasurementRecordFactory;
 class MeasurementsApiService
 {
 	/**
-	 * Guzzle http client object
-	 * @var \GuzzleHttp\Client
-	 */
-	private Client $client;
-
-	/**
 	 * Constructor setting basic parameters
 	 * @param string $apiUrl - url with API endpoint
 	 * @param string $accessToken - access token
@@ -31,12 +25,12 @@ class MeasurementsApiService
 
 	/**
 	 * Get the last $limit of records from the API, and return them as a MeasurementRecord[] array
-	 * @param $limit - limiting the number of records returned. default = 20
+	 * @param int $limit - limiting the number of records returned. default = 20
 	 *
-	 * @return array|null
+	 * @return \App\Entity\MeasurementRecord[]|null
 	 * @throws \GuzzleHttp\Exception\GuzzleException - An exception is thrown if loading or data transfer fails
 	 */
-	public function getLastRecords($limit = 20): ?array
+	public function getLastRecords(int $limit = 20): ?array
 	{
 		// Setting parameters for sorting and limit
 		$params = [
@@ -63,7 +57,6 @@ class MeasurementsApiService
 			return MeasurementRecordFactory::createManyFromArray($data['data']);
 		} catch (\Exception $e) {
 			throw new \Exception ("Failed to load data from api" . $e->getMessage());
-			return null;
 		}
 	}
 }

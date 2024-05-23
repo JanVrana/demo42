@@ -12,7 +12,7 @@ class MeasurementRecordFactory
 	/**
 	 * Creates a single App\Entity\MeasurementRecord object from the array.
 	 *
-	 * @param array $data - Array of values where the key corresponds to the name of the property. Non-existent
+	 * @param array<string, mixed> $data - Array of values where the key corresponds to the name of the property. Non-existent
 	 *                    properties are omitted.
 	 *
 	 * @return \App\Entity\MeasurementRecord
@@ -31,16 +31,18 @@ class MeasurementRecordFactory
 	/**
 	 * Creates an array of a MeasurementRecord object from an array of arrays
 	 *
-	 * @param array $data - Array that contains the measurement Arrays, individual records will be processed by the
+	 * @param null|array<array-key, array> $data - Array that contains the measurement Arrays, individual records will be processed by the
 	 *                    self::createOneFromArray function
 	 *
 	 * @return MeasurementRecord[]
 	 */
-	public static function createManyFromArray(array $data): array
+	public static function createManyFromArray(?array $data): array
 	{
 		$collection = [];
+		if($data instanceof \Traversable) {
 		foreach ($data as $record) {
 			$collection[] = self::createOneFromArray($record);
+		}
 		}
 		return $collection;
 	}
